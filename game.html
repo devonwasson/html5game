@@ -9,15 +9,40 @@
 	</head>
 	<body>
 		<div class="title">POKEMON</div>
+		<div class="caught">Pokemon caught: 0</div>
+		<div class="boost">Boost remaining: 0</div>
+		<div class="muteBtn" onclick="toggleSound()">Pause Sound</div>
 		<div class="cnvas"><canvas class="game"></canvas></div>
 	
 <!-- SCRIPT FOR HANDLING THE GAME -->
-	<script>
-// Adds Audio
-var x = document.createElement("AUDIO");
-x.setAttribute("src","PokemonTVThemeSongFull.mp3");
-x.loop = true;
-x.play();
+<script>
+/* Gets relevant elements from HTML */
+var caught = document.getElementsByClassName("caught")[0];
+var boost = document.getElementsByClassName("boost")[0];
+
+/* Adds Audio to the game */
+var audio = document.createElement("AUDIO");
+var muteBtn = document.getElementsByClassName("muteBtn")[0];
+audio.setAttribute("src","PokemonTVThemeSongFull.mp3");
+audio.loop = true;
+audio.play();
+var playing = true;
+
+
+/* 
+This function toggles between playing sound and pausing
+*/
+function toggleSound() {
+	if (playing) {
+		audio.pause();
+		playing = false;
+		muteBtn.innerHTML = "Un-Pause Sound";
+	} else {
+		audio.play();
+		playing = true;
+		muteBtn.innerHTML = "Pause Sound";
+	}
+}
 
 
 // Create the canvas
@@ -56,7 +81,7 @@ monsterImage.src = "images/poke1.png";
 var baseSpeed = 256;
 var maxSpeed = 1024;
 var hero = {
-  speed: 256, // movement in pixels per second
+  speed: 20, // movement in pixels per second
   speedFlag: 0,
   boost: 0,
   level:1
@@ -117,7 +142,7 @@ var update = function (modifier) {
   	heroImage.src = "images/Pokeball4.png";
   	hero.level = 4;
   }
-  hero.speed = hero.level*.25*maxSpeed;
+  hero.speed = hero.level*60+.25*maxSpeed;
 
   // if the hero is not trying to boost, give him some automatically
   if (!(16 in keysDown)) {
@@ -235,8 +260,10 @@ var render = function () {
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Pokemon caught: " + monstersCaught, 32, 32);
-	ctx.fillText("Boost remaining: " + Math.floor(hero.boost/100), 32, 64);
+	//ctx.fillText("Pokemon caught: " + monstersCaught, 32, 32);
+	caught.innerHTML = "Pokemon caught: " + monstersCaught;
+	//ctx.fillText("Boost remaining: " + Math.floor(hero.boost/100), 32, 64);
+	boost.innerHTML = "Boost remaining: " + Math.floor(hero.boost/100);
 };
 
 

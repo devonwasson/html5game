@@ -6,8 +6,21 @@ html {
 	background-color: #000000;
 	color: white;
 	font-family: impact;
-	font-size: 50px;
+	font-size: 75px;
 }
 .cnvas {
+	text-align: center;
+}
+.caught {
+	color: white;
+	text-align: center;
+}
+.boost {
+	color: white;
+	text-align: center;
+}
+.muteBtn {
+	font-family: arial;
+	color: white;
 	text-align: center;
 }

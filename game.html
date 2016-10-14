@@ -14,7 +14,7 @@
 var x = document.createElement("AUDIO");
 x.setAttribute("src","PokemonTVThemeSongFull.mp3");
 x.loop = true;
-//x.play();
+x.play();
 
 
 // Create the canvas
@@ -38,7 +38,7 @@ var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
 };
-heroImage.src = "images/Pokeball.png";
+heroImage.src = "images/Pokeball1.png";
 
 // Monster image
 monsterImages = ["images/poke1.png","images/poke2.png","images/poke3.png","images/poke4.png","images/poke5.png"];
@@ -51,10 +51,12 @@ monsterImage.src = "images/poke1.png";
 
 // Game objects
 var baseSpeed = 256;
+var maxSpeed = 1024;
 var hero = {
-	speed: baseSpeed, // movement in pixels per second
+  speed: 256, // movement in pixels per second
   speedFlag: 0,
-  boost: 0
+  boost: 0,
+  level:1
 };
 var monster = {
   moveFlag: 0,
@@ -86,6 +88,21 @@ var reset = function (pokeX,pokeY) {
 
 // Update game objects
 var update = function (modifier) {
+  // Update hero speed and image
+  if (hero.boost < 2000) {
+  	heroImage.src = "images/Pokeball1.png";
+  	hero.level = 1;
+  } else if (hero.boost < 4000) {
+  	heroImage.src = "images/Pokeball2.png";
+  	hero.level = 2;
+  } else if (hero.boost < 6000) {
+  	heroImage.src = "images/Pokeball3.png";
+  	hero.level = 3;
+  } else {
+  	heroImage.src = "images/Pokeball4.png";
+  	hero.level = 4;
+  }
+  hero.speed = hero.level*.25*maxSpeed;
 
   // if the hero is not trying to boost, give him some automatically
   if (!(16 in keysDown)) {
@@ -103,14 +120,15 @@ var update = function (modifier) {
     }
   }
 
-	if (16 in keysDown && hero.speedFlag == 0) {
-		hero.speed = hero.speed*2;
+	if (16 in keysDown && hero.speedFlag == 0) { // if boosting
+		maxSpeed = maxSpeed*2;
 		hero.speedFlag = 1;
 	}
-	if (!(16 in keysDown) && hero.speedFlag == 1) {
-		hero.speed = hero.speed/2;
+	if (!(16 in keysDown) && hero.speedFlag == 1) { // if not boosting
+		maxSpeed = maxSpeed/2;
 		hero.speedFlag = 0;
 	}
+
 	if (38 in keysDown && hero.y > 0) { // Player holding up
 		hero.y -= hero.speed * modifier;
 	}

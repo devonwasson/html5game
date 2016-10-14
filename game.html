@@ -52,13 +52,16 @@ monsterImage.src = "images/poke1.png";
 // Game objects
 var baseSpeed = 256;
 var hero = {
-	speed: baseSpeed // movement in pixels per second
+	speed: baseSpeed, // movement in pixels per second
+  speedFlag: 0,
+  boost: 0
 };
-var monster = {};
+var monster = {
+  moveFlag: 0,
+  move: 0,
+  tmpMonstserDirection: 0
+};
 var monstersCaught = 0;
-var speedFlag = 0;
-var monsterMoveFlag = 0;
-var tmpMonsterDirection;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -83,13 +86,30 @@ var reset = function (pokeX,pokeY) {
 
 // Update game objects
 var update = function (modifier) {
-	if (16 in keysDown && speedFlag == 0) {
+
+  // if the hero is not trying to boost, give him some automatically
+  if (!(16 in keysDown)) {
+    hero.boost++;
+  }
+
+  // if the hero is trying to boost
+  if (16 in keysDown) {
+    if (hero.boost <= 0.1) { // if he is near 0
+      hero.boost = 0;
+      delete keysDown[16]; // prevents him from boosting.
+    }
+    else { // normally, just remove some of his boost.
+      hero.boost = hero.boost - 10;
+    }
+  }
+
+	if (16 in keysDown && hero.speedFlag == 0) {
 		hero.speed = hero.speed*2;
-		speedFlag = 1;
+		hero.speedFlag = 1;
 	}
-	if (!(16 in keysDown) && speedFlag == 1) {
+	if (!(16 in keysDown) && hero.speedFlag == 1) {
 		hero.speed = hero.speed/2;
-		speedFlag = 0;
+		hero.speedFlag = 0;
 	}
 	if (38 in keysDown && hero.y > 0) { // Player holding up
 		hero.y -= hero.speed * modifier;
@@ -104,12 +124,12 @@ var update = function (modifier) {
 		hero.x += hero.speed * modifier;
 	}
 
-  if (monsterMoveFlag == 0) {
-    monsterMoveFlag = (Math.round(Math.random()*3)+1)*5; // 5, 10, 15, or 20 game ticks
-    monsterMove = Math.round(Math.random()*3);
+  if (monster.moveFlag == 0) {
+    monster.moveFlag = (Math.round(Math.random()*3)+1)*5; // 5, 10, 15, or 20 game ticks
+    monster.move = Math.round(Math.random()*3);
   }
-  monsterMoveFlag--;
-	switch(monsterMove) {
+  monster.moveFlag--;
+	switch(monster.move) {
 		case 0:
 			monster.y -= baseSpeed * modifier;
 			break;
@@ -134,6 +154,7 @@ var update = function (modifier) {
 		&& monster.y <= (hero.y + 32)
 	) {
 		++monstersCaught;
+    hero.boost = hero.boost + 100;
 		reset(hero.x, hero.y);
 		monsterImage.src = monsterImages[Math.round(Math.random()*4)];
 	}
@@ -161,7 +182,7 @@ var render = function () {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 
       ctx.beginPath();
-      if (speedFlag == 0) {
+      if (hero.speedFlag == 0) {
         ctx.arc(hero.x+12,hero.y+12,25,0,2*Math.PI);
       }
       else {
@@ -182,6 +203,7 @@ var render = function () {
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.fillText("Pokemon caught: " + monstersCaught, 32, 32);
+	ctx.fillText("Boost remaining: " + Math.floor(hero.boost/100), 32, 64);
 };
 
 // The main game loop

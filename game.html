@@ -138,16 +138,16 @@ var update = function (modifier) {
 		monsterImage.src = monsterImages[Math.round(Math.random()*4)];
 	}
 	if (monster.y < 0) {
-		monster.y = canvas.height;
+		monster.y = canvas.height - 16;
 	}
-	if (monster.y > canvas.height) {
+	if (monster.y > canvas.height - 16) {
 		monster.y = 0;
 	}
 	if (monster.x < 0) {
-		monster.x = canvas.width;
+		monster.x = canvas.width - 16;
 	}
-	if (monster.x > canvas.width) {
-		monster.width = 0;
+	if (monster.x > canvas.width - 16) {
+		monster.x = 0;
 	}
 };
 

@@ -159,6 +159,17 @@ var render = function () {
 
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
+
+      ctx.beginPath();
+      if (speedFlag == 0) {
+        ctx.arc(hero.x+12,hero.y+12,25,0,2*Math.PI);
+      }
+      else {
+        ctx.arc(hero.x+12,hero.y+12,75,0,2*Math.PI);
+      }
+      //http://stackoverflow.com/questions/6271419/how-to-fill-the-opposite-shape-on-canvas
+      // for on/off light
+      ctx.stroke();
 	}
 
 	if (monsterReady) {

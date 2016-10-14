@@ -14,7 +14,7 @@
 var x = document.createElement("AUDIO");
 x.setAttribute("src","PokemonTVThemeSongFull.mp3");
 x.loop = true;
-x.play();
+//x.play();
 
 
 // Create the canvas
@@ -50,12 +50,15 @@ monsterImage.onload = function () {
 monsterImage.src = "images/poke1.png";
 
 // Game objects
+var baseSpeed = 256;
 var hero = {
-	speed: 256 // movement in pixels per second
+	speed: baseSpeed // movement in pixels per second
 };
 var monster = {};
 var monstersCaught = 0;
 var speedFlag = 0;
+var monsterMoveFlag = 0;
+var tmpMonsterDirection;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -85,7 +88,7 @@ var update = function (modifier) {
 		speedFlag = 1;
 	}
 	if (!(16 in keysDown) && speedFlag == 1) {
-		hero.speed = hero.speed / 2;
+		hero.speed = hero.speed/2;
 		speedFlag = 0;
 	}
 	if (38 in keysDown && hero.y > 0) { // Player holding up
@@ -101,18 +104,23 @@ var update = function (modifier) {
 		hero.x += hero.speed * modifier;
 	}
 	monsterMove = Math.round(Math.random()*3);
-	switch(monsterMove) {
+  if (monsterMoveFlag == 0) {
+    monsterMoveFlag = 15;
+    tempMonsterMove = monsterMove;
+  }
+  monsterMoveFlag--;
+	switch(tempMonsterMove) {
 		case 0:
-			monster.y -= hero.speed * modifier;
+			monster.y -= baseSpeed * modifier;
 			break;
 		case 1:
-			monster.y += hero.speed * modifier;
+			monster.y += baseSpeed * modifier;
 			break;
 		case 2:
-			monster.x -= hero.speed * modifier;
+			monster.x -= baseSpeed * modifier;
 			break;
 		case 3:
-			monster.x += hero.speed * modifier;
+			monster.x += baseSpeed * modifier;
 			break;
 		default:
 			break;

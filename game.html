@@ -68,7 +68,7 @@ heroImage.onload = function () {
 heroImage.src = "images/Pokeball1.png";
 
 // Monster image
-monsterImages = ["images/poke1.png","images/poke2.png","images/poke3.png","images/poke4.png","images/poke5.png"];
+//monsterImages = ["images/poke1.png","images/poke2.png","images/poke3.png","images/poke4.png","images/poke5.png"];
 var monsterReady = false;
 var monsterImage = new Image();
 monsterImage.onload = function () {
@@ -84,7 +84,8 @@ var hero = {
   speed: 20, // movement in pixels per second
   speedFlag: 0,
   boost: 0,
-  level:1
+  level: 1,
+  flash: 0
 };
 var monster = {
   moveFlag: 0,
@@ -205,17 +206,14 @@ var update = function (modifier) {
 	}
 
 	// Are they touching?
-	if (
-		hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)
-	) {
+	if ( hero.x <= (monster.x + 32) && monster.x <= (hero.x + 32)
+		&& hero.y <= (monster.y + 32) && monster.y <= (hero.y + 32)) {
 		++monstersCaught;
-    hero.boost = hero.boost + 100;
+    	hero.boost = hero.boost + 100;
 		reset(hero.x, hero.y);
-		monsterImage.src = monsterImages[Math.round(Math.random()*4)];
+		monsterImage.src = "images/poke"+Math.round(Math.random()*11)+".png";
 	}
+	// Move monster
 	if (monster.y < 0) {
     monster.y = canvas.height - 32;
 	}

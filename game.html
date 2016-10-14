@@ -5,11 +5,14 @@
 		<!-- Gets Jquery off Internet -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<!-- adds styling for html -->
-		<!--link rel="stylesheet" type="text/css" href="css/styling.css"-->
+		<link rel="stylesheet" type="text/css" href="css/styling.css">
 	</head>
 	<body>
+		<div class="title">POKEMON</div>
+		<div class="cnvas"><canvas class="game"></canvas></div>
+	
+<!-- SCRIPT FOR HANDLING THE GAME -->
 	<script>
-
 // Adds Audio
 var x = document.createElement("AUDIO");
 x.setAttribute("src","PokemonTVThemeSongFull.mp3");
@@ -18,11 +21,10 @@ x.play();
 
 
 // Create the canvas
-var canvas = document.createElement("canvas");
+var canvas = document.getElementsByClassName("game")[0];
 var ctx = canvas.getContext("2d");
 canvas.width = 430;
 canvas.height = 430;
-document.body.appendChild(canvas);
 
 // Background image
 var bgReady = false;
@@ -49,7 +51,8 @@ monsterImage.onload = function () {
 };
 monsterImage.src = "images/poke1.png";
 
-// Game objects
+
+/* Instantiating Game Objects */
 var baseSpeed = 256;
 var maxSpeed = 1024;
 var hero = {
@@ -65,18 +68,25 @@ var monster = {
 };
 var monstersCaught = 0;
 
-// Handle keyboard controls
-var keysDown = {};
 
-addEventListener("keydown", function (e) {
+/* Handle keyboard controls */
+var keysDown = {}; // list to store keyboard values
+addEventListener("keydown", function (e) { // adds key to list
 	keysDown[e.keyCode] = true;
 }, false);
 
-addEventListener("keyup", function (e) {
+addEventListener("keyup", function (e) { // removes key from list
 	delete keysDown[e.keyCode];
 }, false);
 
-// Reset the game when the player catches a monster
+
+/*
+This function resets the game. (i.e. moving objects
+to their original positions)
+INPUTS:
+	pokeX - the x coordinate of the pokeball
+	pokeY - the y coordinate of the pokeball
+*/
 var reset = function (pokeX,pokeY) {
 	hero.x = pokeX;
 	hero.y = pokeY;
@@ -86,7 +96,12 @@ var reset = function (pokeX,pokeY) {
 	monster.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
-// Update game objects
+
+/* 
+This function updates the game
+INPUTS:
+	modifier - value to move objects based on website speed
+*/
 var update = function (modifier) {
   // Update hero speed and image
   if (hero.boost < 2000) {
@@ -224,26 +239,32 @@ var render = function () {
 	ctx.fillText("Boost remaining: " + Math.floor(hero.boost/100), 32, 64);
 };
 
+
 // The main game loop
 var main = function () {
 	var now = Date.now();
 	var delta = now - then;
-
 	update(delta / 1000);
 	render();
-
 	then = now;
-
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
 };
+
 
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
+
 // Let's play this game!
 var then = Date.now();
 reset(canvas.width / 2, canvas.height / 2);
 main();
-</script></body></html>
+
+</script>
+</body>
+</html>
+
+
+

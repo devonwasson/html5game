@@ -1,5 +1,10 @@
 html {
 	background-color: #000000;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+.topText{
+	float: left;
 }
 .title {
 	text-align: center;
@@ -10,6 +15,7 @@ html {
 }
 .cnvas {
 	text-align: center;
+	float: center;
 }
 .caught {
 	color: white;

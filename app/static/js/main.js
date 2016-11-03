@@ -26,17 +26,21 @@ function toggleSound() {
     }
 }
 
-document.onload = function(e) {
-// Create the canvas
-var canvas = document.getElementsByClassName("game")[0];
-var ctx = canvas.getContext("2d");
-canvas.width = 747;
-canvas.height = 583;
+var canvas;
+var ctx;
+var then;
 
-// Let's play this game!
-var then = Date.now();
-reset(canvas.width / 2, canvas.height / 2);
-main();
+document.onload = function() {
+    // Create the canvas
+    canvas = document.getElementsByClassName("game")[0];
+    ctx = canvas.getContext("2d");
+    canvas.width = 747;
+    canvas.height = 583;
+
+    // Let's play this game!
+    then = Date.now();
+    reset(canvas.width / 2, canvas.height / 2);
+    main();
 }
 
 // Background image

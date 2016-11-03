@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70614050-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<html>
+	<head>
+		<title>Game</title>
+		<!-- Gets Jquery off Internet -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- adds styling for html -->
+		<link rel="stylesheet" type="text/css" href="css/styling.css">
+	</head>
+	<body>
+    <div class="topText">
+		    <div class="title">POKEMON</div>
+	      <div class="caught">Pokemon caught: 0</div>
+	      <div class="boost">Boost remaining: 0</div>
+	      <div class="muteBtn" onclick="toggleSound()">Pause Sound</div>
+    </div>
+		<div class="cnvas"><canvas class="game"></canvas></div>
+
+<!-- SCRIPT FOR HANDLING THE GAME -->
+<script src="/js/main.js"></script>
+</body>
+</html>

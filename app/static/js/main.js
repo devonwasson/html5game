@@ -5,7 +5,7 @@ var boost = document.getElementsByClassName("boost")[0];
 /* Adds Audio to the game */
 var audio = document.createElement("AUDIO");
 var muteBtn = document.getElementsByClassName("muteBtn")[0];
-audio.setAttribute("src","PokemonTVThemeSongFull.mp3");
+audio.setAttribute("src","../static/mp3/PokemonTVThemeSongFull.mp3");
 audio.loop = true;
 audio.play();
 var playing = true;
@@ -32,7 +32,6 @@ var canvas = document.getElementsByClassName("game")[0];
 var ctx = canvas.getContext("2d");
 canvas.width = 747;
 canvas.height = 583;
-
 // Background image
 var bgReady = false;
 var bgImage = new Image();

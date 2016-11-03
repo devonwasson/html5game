@@ -26,19 +26,26 @@ function toggleSound() {
     }
 }
 
-
+document.onload = function(e) {
 // Create the canvas
 var canvas = document.getElementsByClassName("game")[0];
 var ctx = canvas.getContext("2d");
 canvas.width = 747;
 canvas.height = 583;
+
+// Let's play this game!
+var then = Date.now();
+reset(canvas.width / 2, canvas.height / 2);
+main();
+}
+
 // Background image
 var bgReady = false;
 var bgImage = new Image();
 bgImage.onload = function () {
     bgReady = true;
 };
-bgImage.src = "images/map.png";
+bgImage.src = "../static/images/map.png";
 
 // Hero image
 var heroReady = false;
@@ -46,7 +53,7 @@ var heroImage = new Image();
 heroImage.onload = function () {
     heroReady = true;
 };
-heroImage.src = "images/Pokeball1.png";
+heroImage.src = "../static/images/Pokeball1.png";
 
 // Monster image
 //monsterImages = ["images/poke1.png","images/poke2.png","images/poke3.png","images/poke4.png","images/poke5.png"];
@@ -55,7 +62,7 @@ var monsterImage = new Image();
 monsterImage.onload = function () {
     monsterReady = true;
 };
-monsterImage.src = "images/poke1.png";
+monsterImage.src = "../static/images/poke1.png";
 var MAX_POKEMON_NUMBER = 151; // max number of pokemon images
 
 
@@ -277,7 +284,4 @@ var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
 
-// Let's play this game!
-var then = Date.now();
-reset(canvas.width / 2, canvas.height / 2);
-main();
+
